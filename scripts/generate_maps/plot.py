@@ -447,31 +447,31 @@ def plot_chain_summary(df: pd.DataFrame, save_path: Optional[str] = None) -> Non
             '>$200,000']
     })
 
-    ld_income_buckets_count = df.loc[:, ['LD_income_bucket_at_quota']].value_counts().to_frame().reset_index()
-    ld_income_buckets_count.columns = ['LD_income_bucket_at_quota', 'count']
+    ld_income_buckets_count = df.loc[:, ['LD_income_range_at_quota']].value_counts().to_frame().reset_index()
+    ld_income_buckets_count.columns = ['LD_income_range_at_quota', 'count']
 
     for k in income_buckets['full_name']:
-        if k not in ld_income_buckets_count['LD_income_bucket_at_quota'].tolist():
-            ld_income_buckets_count = ld_income_buckets_count.append({'LD_income_bucket_at_quota': k, 'count': 0}, ignore_index=True)
+        if k not in ld_income_buckets_count['LD_income_range_at_quota'].tolist():
+            ld_income_buckets_count = ld_income_buckets_count.append({'LD_income_range_at_quota': k, 'count': 0}, ignore_index=True)
 
-    ld_income_buckets_count.index = ld_income_buckets_count['LD_income_bucket_at_quota']
+    ld_income_buckets_count.index = ld_income_buckets_count['LD_income_range_at_quota']
     ld_income_buckets_count = ld_income_buckets_count.loc[income_buckets['full_name'], :]
     ld_income_buckets_count = ld_income_buckets_count.reset_index(drop=True)
-    ld_income_buckets_count['LD_income_bucket_at_quota'] = income_buckets['short_name']
-    ld_income_buckets_count.columns = ['income_bucket', 'count']
+    ld_income_buckets_count['LD_income_range_at_quota'] = income_buckets['short_name']
+    ld_income_buckets_count.columns = ['income_range', 'count']
 
-    sd_income_buckets_count = df.loc[:, ['SD_income_bucket_at_quota']].value_counts().to_frame().reset_index()
-    sd_income_buckets_count.columns = ['SD_income_bucket_at_quota', 'count']
+    sd_income_buckets_count = df.loc[:, ['SD_income_range_at_quota']].value_counts().to_frame().reset_index()
+    sd_income_buckets_count.columns = ['SD_income_range_at_quota', 'count']
 
     for k in income_buckets['full_name']:
-        if k not in sd_income_buckets_count['SD_income_bucket_at_quota'].tolist():
-            sd_income_buckets_count = sd_income_buckets_count.append({'SD_income_bucket_at_quota': k, 'count': 0}, ignore_index=True)
+        if k not in sd_income_buckets_count['SD_income_range_at_quota'].tolist():
+            sd_income_buckets_count = sd_income_buckets_count.append({'SD_income_range_at_quota': k, 'count': 0}, ignore_index=True)
 
-    sd_income_buckets_count.index = sd_income_buckets_count['SD_income_bucket_at_quota']
+    sd_income_buckets_count.index = sd_income_buckets_count['SD_income_range_at_quota']
     sd_income_buckets_count = sd_income_buckets_count.loc[income_buckets['full_name'], :]
     sd_income_buckets_count = sd_income_buckets_count.reset_index(drop=True)
-    sd_income_buckets_count['SD_income_bucket_at_quota'] = income_buckets['short_name']
-    sd_income_buckets_count.columns = ['income_bucket', 'count']
+    sd_income_buckets_count['SD_income_range_at_quota'] = income_buckets['short_name']
+    sd_income_buckets_count.columns = ['income_range', 'count']
 
     eth_col_rename = [
         'Remaining',
@@ -582,7 +582,7 @@ def plot_chain_summary(df: pd.DataFrame, save_path: Optional[str] = None) -> Non
     quadrant_ax.set_xlabel('Small District Quadrant')
 
     # renter 
-    sns_plot = sns.stripplot(ax=renters_ax, x="variable", y="value", data=renter_df, jitter=0.5, hue='variable', palette=colors)
+    sns_plot = sns.stripplot(ax=renters_ax, x="variable", y="value", data=renter_df, jitter=0.05, hue='variable', palette=colors)
     sns_plot.get_legend().remove()
 
     renters_ax.set_xlabel('')
@@ -591,7 +591,7 @@ def plot_chain_summary(df: pd.DataFrame, save_path: Optional[str] = None) -> Non
     renters_ax.set_title('Distribution of District Renter Composition', fontsize=10)
 
     # ld eth alone
-    sns.stripplot(ax=ld_eth_alone_ax, x="variable", y="value", data=ld_eth_alone_df, jitter=0.5, color=colors[0])
+    sns.stripplot(ax=ld_eth_alone_ax, x="variable", y="value", data=ld_eth_alone_df, jitter=0.05, color=colors[0])
 
     ld_eth_alone_ax.set_xlabel('')
     ld_eth_alone_ax.set_title('Large District\nDistribution of CVAP Ethnicity (Alone)', fontsize=10)
@@ -601,7 +601,7 @@ def plot_chain_summary(df: pd.DataFrame, save_path: Optional[str] = None) -> Non
     ld_eth_alone_ax.tick_params(axis='x', which='major', labelsize=8)
 
     # sd eth alone
-    sns.stripplot(ax=sd_eth_alone_ax, x="variable", y="value", data=sd_eth_alone_df, jitter=0.5, color=colors[1])
+    sns.stripplot(ax=sd_eth_alone_ax, x="variable", y="value", data=sd_eth_alone_df, jitter=0.05, color=colors[1])
 
     sd_eth_alone_ax.set_xlabel('')
     sd_eth_alone_ax.set_title('Small District\nDistribution of CVAP Ethnicity (Alone)', fontsize=10)
@@ -635,14 +635,14 @@ def plot_chain_summary(df: pd.DataFrame, save_path: Optional[str] = None) -> Non
     sd_eth_combined_ax.tick_params(axis='x', which='major', labelsize=7)
 
     # income
-    ld_income_buckets_count.plot.bar(ax=ld_income_ax, x='income_bucket', y='count', legend=False, color=colors[0], alpha=0.5, rot=0)
+    ld_income_buckets_count.plot.bar(ax=ld_income_ax, x='income_range', y='count', legend=False, color=colors[0], alpha=0.5, rot=0)
 
     ld_income_ax.set_title('Large District\nDist of Income Range Needed to Reach Quota',  fontsize=10)
     ld_income_ax.set_ylabel('count')
     ld_income_ax.set_xlabel('')
     ld_income_ax.set_xticklabels([])
 
-    sd_income_buckets_count.plot.bar(ax=sd_income_ax, x='income_bucket', y='count', legend=False, color=colors[1], alpha=0.5, rot=0)
+    sd_income_buckets_count.plot.bar(ax=sd_income_ax, x='income_range', y='count', legend=False, color=colors[1], alpha=0.5, rot=0)
 
     sd_income_ax.set_title('Small District\nDist of Income Range Needed to Reach Quota',  fontsize=10)
     sd_income_ax.set_ylabel('count')

@@ -203,8 +203,8 @@ def calc_partition_stats(partition_idx: int, partition_info: Dict, geodataframe:
             SD_bucket_reached = income_k
             break
 
-    df['LD_income_bucket_at_quota'] = LD_bucket_reached
-    df['SD_income_bucket_at_quota'] = SD_bucket_reached
+    df['LD_income_range_at_quota'] = LD_bucket_reached
+    df['SD_income_range_at_quota'] = SD_bucket_reached
 
     # add quadrant
     assigned_gdf = geodataframe.copy()
@@ -319,18 +319,19 @@ def run_recom(small_district_lower_bound_prop: float,
         partition_info = reorganize_partition_info(partition, n_district_electeds=n_district_electeds)
         partition_stats = calc_partition_stats(partition_idx, partition_info, gdf)
 
-        tmp = partition_stats['LD_income_bucket_at_quota'].item()
-        partition_stats['LD_income_bucket_at_quota'] = acs_income_col_dict[tmp]
+        tmp = partition_stats['LD_income_range_at_quota'].item()
+        partition_stats['LD_income_range_at_quota'] = acs_income_col_dict[tmp]
 
-        tmp = partition_stats['SD_income_bucket_at_quota'].item()
-        partition_stats['SD_income_bucket_at_quota'] = acs_income_col_dict[tmp]
+        tmp = partition_stats['SD_income_range_at_quota'].item()
+        partition_stats['SD_income_range_at_quota'] = acs_income_col_dict[tmp]
 
         plot.plot_partition(partition_info, gdf, map_output_dir / f'{partition_idx}_map.png')
         plot.plot_partition_stats(partition_info, partition_stats, gdf, map_output_dir / f'{partition_idx}_map_stats.png')
 
         all_partition_stats.append(partition_stats)
 
-    all_stats_df = pd.concat(all_partition_stats).round()
+    all_stats_df = pd.concat(all_partition_stats)
+    all_stats_df = all_stats_df.round()
     all_stats_df.to_csv(map_stats_path, index=False)
 
     plot.plot_chain_summary(all_stats_df, map_summary_plot_path)
