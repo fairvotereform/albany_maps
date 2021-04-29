@@ -1,0 +1,64 @@
+
+
+CREATING ALBANY BLOCK GROUP GEOID LIST
+
+Could just merge blocks from files pedro provided. However for more confirmation, I filtered the Alameda county block groups from the all California 2019 block group file. Then overlayed those with Pedro's blocks using vs-code map plugin to see which block groups made up Albany map. 
+
+files: 
+
+    inputs: 
+
+        inputs/tl_2019_06_bg/tl_2019_06_bg.shp - all California block groups. downloaded from downloaded from https://www2.census.gov/geo/tiger/TIGER2019/BG/tl_2019_06_bg.zip
+        
+        inputs/from_pedro/Files/Albany CA Census Blocks.shp - Albany blocks from Pedro. Source unknown.
+
+    outputs:
+
+        alameda/2019_bg/bg.shp - filtered Alameda block groups.
+
+        albany/2019_bg_geoids.txt - list of Albany block groups GEOIDs from visual map inspection.
+
+        albany/pedro_census_blocks.geojson - converted Pedro file
+
+scripts:
+    filter_alameda_bg.py
+    make_albany_geojson.py
+
+
+CREATING ALBANY BLOCK GROUP SHAPEFILE
+
+Read geoid list and create Albany block group shapfile. Add race/ethnicity CVAP data.
+
+files:
+
+    inputs:
+
+        inputs/tl_2019_06_bg/tl_2019_06_bg.shp
+        inputs/ACS2019_IncomeDistBG/data_renamed.csv
+        inputs/ACS2019_IncomeDistBG/renamed_cols.csv
+        inputs/ACS_2019_CVAP/BlockGr.csv
+        albany/2019_bg_geoids.txt
+
+    outputs:
+
+        albany/2019_bg/bg.shp - Albany block group shapefile
+        albany/2019_bg/cvap_col_dict.csv - CVAP column rename data dictionary
+        albany/2019_bg/cit_col_dict.csv - CIT column rename data dictionary
+        albany/2019_bg_demography_alone_categories.png - heatmaps of race/eth categories
+        albany/2019_bg_demography_combined_categories.png - heatmaps of race/eth categories
+        albany/2019_bg_renters.png - heatmaps of renter/owners categories
+        albany/2019_bg_income.png - heatmaps of income categories
+        albany/2019_bg.png - plot of block groups
+
+scripts:
+    make_albany_bg.py
+
+
+CREATING MAPS
+
+scripts:
+    recom_3_2.py
+    recom_4_1.py
+
+
+

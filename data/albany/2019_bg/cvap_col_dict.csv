@@ -1,0 +1,14 @@
+original,renamed
+American Indian or Alaska Native Alone,cvap_NA
+American Indian or Alaska Native and Black or African American,cvap_NA+AA
+American Indian or Alaska Native and White,cvap_NA+W
+Asian Alone,cvap_A
+Asian and White,cvap_A+W
+Black or African American Alone,cvap_AA
+Black or African American and White,cvap_AA+W
+Hispanic or Latino,cvap_L
+Native Hawaiian or Other Pacific Islander Alone,cvap_NH
+Not Hispanic or Latino,cvap_not_L
+Remainder of Two or More Race Responses,cvap_rest
+Total,cvap_total
+White Alone,cvap_W

@@ -1,0 +1,14 @@
+original,renamed
+American Indian or Alaska Native Alone,cit_NA
+American Indian or Alaska Native and Black or African American,cit_NA+AA
+American Indian or Alaska Native and White,cit_NA+W
+Asian Alone,cit_A
+Asian and White,cit_A+W
+Black or African American Alone,cit_AA
+Black or African American and White,cit_AA+W
+Hispanic or Latino,cit_L
+Native Hawaiian or Other Pacific Islander Alone,cit_NH
+Not Hispanic or Latino,cit_not_L
+Remainder of Two or More Race Responses,cit_rest
+Total,cit_total
+White Alone,cit_W
